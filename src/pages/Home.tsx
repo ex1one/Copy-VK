@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Button } from '@mui/material';
 
-const Home = () => (
+const Home: FC = () => (
   <div>
     Home
     <Button variant="contained">Contained</Button>

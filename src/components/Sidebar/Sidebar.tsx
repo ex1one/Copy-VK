@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Box } from '@mui/material';
-import { Link } from 'react-router-dom';
 import UserItem from '../UserItem/UserItem';
 
-const Sidebar = () => {
+const Sidebar: FC = () => {
   const [da, setDa] = useState();
   return (
     <Box sx={{ display: 'flex' }}>

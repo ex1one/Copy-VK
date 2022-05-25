@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const UserItem = () => {
+const UserItem: FC = () => {
   const [dada, setDada] = useState();
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
