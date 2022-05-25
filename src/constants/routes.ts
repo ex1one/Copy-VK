@@ -21,26 +21,26 @@ const routes: IRoute[] = [
     element: Home,
     auth: false,
   },
-  // {
-  //   path: ERoutesNames.PROFILE,
-  //   element: Home,
-  //   auth: true,
-  // },
-  // {
-  //   path: ERoutesNames.MESSAGES,
-  //   element: Home,
-  //   auth: true,
-  // },
-  // {
-  //   path: ERoutesNames.CURRENT_MESSAGES,
-  //   element: Home,
-  //   auth: false,
-  // },
-  // {
-  //   path: ERoutesNames.FRIENDS,
-  //   element: Home,
-  //   auth: false,
-  // },
+  {
+    path: ERoutesNames.PROFILE,
+    element: Home,
+    auth: true,
+  },
+  {
+    path: ERoutesNames.MESSAGES,
+    element: Home,
+    auth: true,
+  },
+  {
+    path: ERoutesNames.CURRENT_MESSAGES,
+    element: Home,
+    auth: false,
+  },
+  {
+    path: ERoutesNames.FRIENDS,
+    element: Home,
+    auth: false,
+  },
 ];
 
 export default routes;

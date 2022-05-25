@@ -1,27 +1,60 @@
 import React, { FC, useState } from 'react';
-import { Box } from '@mui/material';
+import {
+  Avatar, Box, Card, Stack,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
+import logo from '../../../public/img/logo.jpg';
 
 const UserItem: FC = () => {
   const [dada, setDada] = useState();
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Link to="/profile">
-        <Box sx={{ position: 'relative', marginRight: 5 }}>
-          <img src="" alt="" />
+    <Card
+      variant="outlined"
+      sx={{
+        padding: 2,
+        backgroundColor: '#F1F7FA',
+        border: 'none',
+        borderRadius: 3,
+      }}
+    >
+      <Link
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          textDecoration: 'none',
+          color: '#111',
+          marginBottom: 12,
+        }}
+        to="/profile"
+      >
+        <Box sx={{
+          position: 'relative',
+          marginRight: 2,
+          borderRadius: '50%',
+          width: 50,
+          height: 50,
+        }}
+        >
+          <Avatar
+            alt="Remy Sharp"
+            sx={{ width: 50, height: 50 }}
+            src={logo}
+          />
           <Box sx={{
-            backgroundColor: 'green',
-            width: 4,
-            height: 4,
+            backgroundColor: '#4FB14F',
+            border: '2px solid #F1F7FA',
+            width: 12,
+            height: 12,
             position: 'absolute',
-            bottom: '2',
-            left: '2',
+            bottom: 0,
+            right: 0,
+            borderRadius: '50%',
           }}
           />
         </Box>
-        <span>Имя</span>
+        <span style={{ fontSize: 16 }}>Илья Рогачев</span>
       </Link>
-    </Box>
+    </Card>
   );
 };
 
