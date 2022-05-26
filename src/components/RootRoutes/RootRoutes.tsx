@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import routes from '../../constants/routes';
 import Layout from '../Layout/Layout';
 
-const EventRoutes: FC = () => {
+const RootRoutes: FC = () => {
   const isAuth = true;
   return (
     <Routes>
@@ -28,4 +28,4 @@ const EventRoutes: FC = () => {
   );
 };
 
-export default EventRoutes;
+export default RootRoutes;

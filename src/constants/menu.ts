@@ -1,6 +1,14 @@
 import * as Icons from '@mui/icons-material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { SvgIconTypeMap } from '@mui/material';
 
-const menu = [
+interface IMenu {
+  title: string;
+  link: string;
+  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>
+}
+
+const menu: IMenu[] = [
   {
     title: 'Моя страница',
     link: '/profile',

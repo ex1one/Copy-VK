@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { Button } from '@mui/material';
+import { Box } from '@mui/material';
+import AddNewPost from '../components/AddNewPost/addNewPost';
 
 const Home: FC = () => (
-  <div>
-    Home
-    <Button variant="contained">Contained</Button>
-  </div>
+  <Box>
+    <AddNewPost />
+  </Box>
 );
 
 export default Home;
