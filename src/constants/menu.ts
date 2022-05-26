@@ -8,12 +8,12 @@ const menu = [
   },
   {
     title: 'Друзья',
-    link: '/profile',
+    link: '/friends',
     icon: Icons.People,
   },
   {
     title: 'Новости',
-    link: '/profile',
+    link: '/news',
     icon: Icons.Article,
   },
 ];

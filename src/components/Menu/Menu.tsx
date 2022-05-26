@@ -4,26 +4,21 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import menu from '../../constants/menu';
+import styles from './menu.module.scss';
 
 const Menu = () => {
   const history = useNavigate();
+
   return (
     <Card
       variant="outlined"
-      sx={{
-        padding: 2,
-        backgroundColor: '#F1F7FA',
-        border: 'none',
-        borderRadius: 3,
-        marginTop: 5,
-        marginBottom: 5,
-      }}
+      className={styles.Card}
     >
       <List>
         {menu.map((item) => (
           <ListItem key={item.link} disablePadding>
             <ListItemButton onClick={() => history(item.link)}>
-              <ListItemIcon sx={{ minWidth: '40px' }}>
+              <ListItemIcon className={styles.ListItemIcon}>
                 <item.icon />
               </ListItemIcon>
               <ListItemText primary={item.title} />
