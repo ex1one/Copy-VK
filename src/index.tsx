@@ -1,13 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import { StyledEngineProvider } from '@mui/material';
+import RootRoutes from './components/RootRoutes/RootRoutes';
 
 const div = document.createElement('div');
 if (document.body) document.body.append(div);
 
 render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <StyledEngineProvider injectFirst>
+        <RootRoutes />
+      </StyledEngineProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   div,
 );

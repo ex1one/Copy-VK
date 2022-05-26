@@ -1,0 +1,47 @@
+.Card {
+  padding: 16px;
+  background-color: #f1f7fa;
+  border: none;
+  border-radius: 12px;
+
+  .Link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #111;
+    margin-bottom: 12px;
+
+    .Box{
+      position: relative;
+      margin-right: 16px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+
+      .Avatar {
+        width: 50px;
+        height: 50px;
+      }
+
+      .insideBox{
+        position: absolute;
+        background-color: #4fb14f;
+        border: 2px solid #f1f7fa;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        right: 0;
+        bottom: 0;
+      }
+
+      .name{
+        font-size: 16px;
+      }
+    }
+
+  }
+
+  .ListItemIcon{
+    min-width: 40px;
+  }
+}
