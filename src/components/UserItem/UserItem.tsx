@@ -5,23 +5,7 @@ import {
 } from '@mui/material';
 import { QuestionAnswer } from '@mui/icons-material';
 import styles from './userItem.module.scss';
-import logo from '../../../public/img/logo.jpg';
-import { IUser } from '../../api/users/types';
-
-const users: IUser[] = [
-  {
-    id: 'dada',
-    avatar: logo,
-    name: 'Ilya Rogachev',
-    isInNetwork: false,
-  },
-  {
-    id: '3131',
-    avatar: logo,
-    name: 'Ilya Gorbachev',
-    isInNetwork: true,
-  },
-];
+import users from '../../api/users';
 
 const UserItem: FC = () => {
   const history = useNavigate();

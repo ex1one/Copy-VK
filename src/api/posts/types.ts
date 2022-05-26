@@ -1,6 +1,6 @@
 import { IUser } from '../users/types';
 
-export interface IPost {
+export interface IPosts {
   author: IUser;
   createdAt: string;
   content: string;

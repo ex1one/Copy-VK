@@ -5,7 +5,7 @@ import { SvgIconTypeMap } from '@mui/material';
 interface IMenu {
   title: string;
   link: string;
-  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>
+  icon: OverridableComponent<SvgIconTypeMap>
 }
 
 const menu: IMenu[] = [
