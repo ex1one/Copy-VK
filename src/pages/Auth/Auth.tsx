@@ -48,7 +48,6 @@ const Auth = () => {
       default:
         return target;
     }
-    console.log(userData);
   };
 
   return (
@@ -93,14 +92,14 @@ const Auth = () => {
             />
           </Box>
           <Box className={styles.insideBox}>
-            {/* <Button */}
-            {/*  className={styles.Button} */}
-            {/*  color="primary" */}
-            {/*  variant="contained" */}
-            {/*  type="submit" */}
-            {/* > */}
-            {/*  Войти */}
-            {/* </Button> */}
+            <Button
+              className={styles.Button}
+              color="primary"
+              variant="contained"
+              type="submit"
+            >
+              Войти
+            </Button>
             <Button
               className={styles.Button}
               color="primary"
