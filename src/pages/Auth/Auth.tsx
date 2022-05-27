@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
-  Avatar, Box, Button, CircularProgress, Grid, Paper, TextField,
+  Alert,
+  Avatar, Box, Button, Grid, Paper, TextField,
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import styles from './auth.module.scss';
-import { IAuthorization } from './types';
-
-interface IUserData {
-  email: string;
-  password: string;
-}
+import { IAuthorization, IUserData } from './types';
 
 const Auth = () => {
   const {
@@ -21,13 +18,42 @@ const Auth = () => {
     reset,
     handleSubmit,
   } = useForm<IAuthorization>({ mode: 'onBlur' });
+  const [userData, setUserData] = useState<IUserData>({
+    email: '',
+    password: '',
+  } as IUserData);
+  const [error, setError] = useState(null);
 
-  const handleLogin: SubmitHandler<IAuthorization> = (data) => {
+  const handleLogin: SubmitHandler<IAuthorization> = () => {
+    const auth = getAuth();
+
+    createUserWithEmailAndPassword(auth, userData.email, userData.password)
+      .then((userCredential) => {
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
     reset();
+  };
+
+  const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = event.target.name;
+    switch (target) {
+      case 'email':
+        setUserData({ ...userData, email: event.target.value });
+        break;
+      case 'password':
+        setUserData({ ...userData, password: event.target.value });
+        break;
+      default:
+        return target;
+    }
+    console.log(userData);
   };
 
   return (
     <form onSubmit={handleSubmit(handleLogin)}>
+      {error && <Alert severity="error">{error}</Alert>}
       <Grid>
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
@@ -43,6 +69,8 @@ const Auth = () => {
                   message: 'Введите валидный E-mail',
                 },
               })}
+              name="email"
+              onChange={changeHandler}
               className={styles.TextField}
               label="E-mail"
               type="text"
@@ -56,6 +84,8 @@ const Auth = () => {
                   message: 'Введите валидный пароль',
                 },
               })}
+              name="password"
+              onChange={changeHandler}
               type="password"
               label="Пароль"
               placeholder="Введите пароль"
@@ -63,14 +93,14 @@ const Auth = () => {
             />
           </Box>
           <Box className={styles.insideBox}>
-            <Button
-              className={styles.Button}
-              color="primary"
-              variant="contained"
-              type="submit"
-            >
-              Войти
-            </Button>
+            {/* <Button */}
+            {/*  className={styles.Button} */}
+            {/*  color="primary" */}
+            {/*  variant="contained" */}
+            {/*  type="submit" */}
+            {/* > */}
+            {/*  Войти */}
+            {/* </Button> */}
             <Button
               className={styles.Button}
               color="primary"
