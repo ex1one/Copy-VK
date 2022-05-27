@@ -3,8 +3,9 @@ import {
   Avatar, Box, Button, CircularProgress, Grid, Paper, TextField,
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './auth.module.scss';
+import { IAuthorization } from './types';
 
 interface IUserData {
   email: string;
@@ -12,13 +13,21 @@ interface IUserData {
 }
 
 const Auth = () => {
-  const {} = useForm();
-  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const {
+    register,
+    formState: {
+      errors,
+    },
+    reset,
+    handleSubmit,
+  } = useForm<IAuthorization>({ mode: 'onBlur' });
+
+  const handleLogin: SubmitHandler<IAuthorization> = (data) => {
+    reset();
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleSubmit(handleLogin)}>
       <Grid>
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
@@ -26,8 +35,32 @@ const Auth = () => {
             <h2>Авторизация</h2>
           </Grid>
           <Box className={styles.Box}>
-            <TextField className={styles.TextField} label="E-mail" placeholder="Введите E-mail" />
-            <TextField label="Пароль" placeholder="Введите пароль" />
+            <TextField
+              {...register('email', {
+                required: 'Это обязательное поле',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
+                  message: 'Введите валидный E-mail',
+                },
+              })}
+              className={styles.TextField}
+              label="E-mail"
+              type="text"
+              helperText={errors.email && errors.email.message}
+            />
+            <TextField
+              {...register('password', {
+                required: 'Это обязательное поле',
+                pattern: {
+                  value: /^[a-z0-9_-]{3,16}$/,
+                  message: 'Введите валидный пароль',
+                },
+              })}
+              type="password"
+              label="Пароль"
+              placeholder="Введите пароль"
+              helperText={errors.password && errors.password.message}
+            />
           </Box>
           <Box className={styles.insideBox}>
             <Button
