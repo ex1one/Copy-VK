@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Grid } from '@mui/material';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
+import './layout.module.scss';
 
 const Layout: FC = ({ children }) => (
   <>

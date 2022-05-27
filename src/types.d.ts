@@ -3,4 +3,6 @@ declare module '*.scss' {
   export default className;
 }
 
+declare module '*.png';
+
 declare module '*.jpg';

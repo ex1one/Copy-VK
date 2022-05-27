@@ -1,0 +1,47 @@
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #5277a3;
+  padding: 1.2rem 3rem 0.6rem;
+
+  .imageWrapper{
+    width: 20%;
+
+    & img{
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  .wrapper{
+    position: relative;
+    width: calc(80% - 16px);
+    border-radius: 30px;
+    background-color: #2c4a76;
+    padding-right: 19px;
+
+    & svg {
+      position: absolute;
+      top: 7px;
+      left: 46%;
+      fill: #607d9f;
+    }
+
+    & .input{
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      border-radius: 30px;
+      color: #fff;
+      padding: 10px;
+      font-size: 16px;
+
+      &::placeholder{
+        text-align: center;
+        color: #607d9f;
+      }
+    }
+  }
+
+}
