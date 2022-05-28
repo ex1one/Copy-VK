@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import AddNewPost from '../../components/AddNewPost/addNewPost';
 import Posts from '../../components/Posts/Posts';
 
-const Home: FC = () => (
+const Home = () => (
   <Box>
     <AddNewPost />
     <Posts />
