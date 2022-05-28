@@ -8,12 +8,6 @@ const fetchUsers: IUser[] = [
     name: 'Ilya Rogachev',
     isInNetwork: false,
   },
-  {
-    _id: '3131',
-    avatar: logo,
-    name: 'Ilya Gorbachev',
-    isInNetwork: true,
-  },
 ];
 
 export default fetchUsers;

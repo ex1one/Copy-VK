@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import useAuth from '../../hooks/useAuth';
-import { IMessage } from './types';
 import formatDate from '../../utilities/formatedDate';
 import styles from './messages.module.scss';
+import { IMessage } from './types';
 
 const Messages = () => {
   const { db, user } = useAuth();

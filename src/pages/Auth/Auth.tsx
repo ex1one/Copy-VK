@@ -35,25 +35,27 @@ const Auth = () => {
 
   const handleLogin: SubmitHandler<IAuthorization> = () => {
     isSetLoading(true);
-    if (isRegForm) {
-      createUserWithEmailAndPassword(ga, userData.email, userData.password)
-        .then((userCredential) => {
-          updateProfile(userCredential.user, {
-            displayName: userData.name,
-          }).then();
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
-      isSetLoading(false);
-    } else {
-      signInWithEmailAndPassword(ga, userData.email, userData.password)
-        .then()
-        .catch((error) => {
-          setError(error.message);
-        });
-      isSetLoading(false);
-    }
+    setTimeout(() => {
+      if (isRegForm) {
+        createUserWithEmailAndPassword(ga, userData.email, userData.password)
+          .then((userCredential) => {
+            updateProfile(userCredential.user, {
+              displayName: userData.name,
+            }).then();
+          })
+          .catch((error) => {
+            setError(error.message);
+          });
+        isSetLoading(false);
+      } else {
+        signInWithEmailAndPassword(ga, userData.email, userData.password)
+          .then()
+          .catch((error) => {
+            setError(error.message);
+          });
+        isSetLoading(false);
+      }
+    }, 1000);
     reset();
   };
 
