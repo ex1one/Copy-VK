@@ -7,7 +7,7 @@ import { QuestionAnswer } from '@mui/icons-material';
 import styles from './userItem.module.scss';
 import users from '../../api/users';
 
-const UserItem: FC = () => {
+const UsersItems: FC = () => {
   const history = useNavigate();
 
   return (
@@ -17,9 +17,9 @@ const UserItem: FC = () => {
     >
       {users.map((user) => (
         <Link
-          key={user.id}
+          key={user._id}
           className={styles.Link}
-          to={`/profile${user.id}`}
+          to={`/profile/${user._id}`}
         >
           <Box className={styles.Box}>
             <Avatar
@@ -45,4 +45,4 @@ const UserItem: FC = () => {
     </Card>
   );
 };
-export default UserItem;
+export default UsersItems;

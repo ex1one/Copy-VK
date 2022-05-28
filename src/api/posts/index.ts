@@ -6,14 +6,13 @@ import logo3 from '../../../public/img/3.jpg';
 const fetchPosts: IPosts[] = [
   {
     author: {
-      id: 'da',
+      _id: 'da',
       avatar: logo3,
       name: 'Спишь?',
     },
     content: 'Я не сплю',
     createdAt: '15 минут назад',
     images: [
-      logo1,
       logo2,
       logo3,
     ],

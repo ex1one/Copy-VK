@@ -11,18 +11,25 @@ interface IContext {
   ga: Auth // getAuth
 }
 
-export const AuthContext = createContext<IContext>({} as IContext);
+export const AuthContext = createContext<IContext>({} as IContext); // Подумать над этим, мб я заменю это на Redux
 
 const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const ga = getAuth();
 
   useEffect(() => {
-    const unListen = onAuthStateChanged(ga, (userAuth) => setUser(userAuth ? {
-      _id: userAuth.uid,
-      avatar: users[1].avatar,
-      name: userAuth?.displayName || '',
-    } : null));
+    const unListen = onAuthStateChanged(ga, (userAuth) => {
+      if (userAuth) {
+        setUser({
+          _id: userAuth.uid,
+          avatar: users[1].avatar,
+          name: userAuth.displayName || '',
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
     return () => {
       unListen();
     };

@@ -15,9 +15,9 @@ const Posts: FC <IPostsProps> = ({ posts }) => (
     {posts.map((post) => (
       <Box key={post.createdAt} className={styles.Box}>
         <Link
-          key={post.author.id}
+          key={post.author._id}
           className={styles.Link}
-          to={`/profile${post.author.id}`}
+          to={`/profile/${post.author._id}`}
         >
           <Box className={styles.insideBox}>
             <Avatar

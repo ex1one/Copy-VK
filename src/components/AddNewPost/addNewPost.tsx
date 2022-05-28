@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react';
 import { Box, TextField } from '@mui/material';
 import { TypeSetState } from '../../api/users/types';
-import users from '../../api/users';
 import styles from './addNewPost.module.scss';
 import { IPosts } from '../../api/posts/types';
 import formatDate from '../../utilities/formatedDate';
+import useAuth from '../../hooks/useAuth';
 
 interface IAddNewPost {
   setPosts: TypeSetState<IPosts[]>
@@ -13,19 +13,19 @@ interface IAddNewPost {
 const AddNewPost: FC <IAddNewPost> = ({ setPosts }) => {
   const [date, setDate] = useState<Date>(new Date());
   const [content, setContent] = useState('');
+  const { user } = useAuth();
 
   const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setContent(event.target.value);
   };
 
   const addNewPost = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && user) {
       setPosts((prev) => [
         {
-          author: users[0],
+          author: user,
           content,
-          createdAt: '5 минут назад',
-          // createdAt: formatDate(date),
+          createdAt: formatDate(date),
         },
         ...prev,
       ]);
