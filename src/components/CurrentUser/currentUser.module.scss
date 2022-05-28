@@ -1,0 +1,21 @@
+.Card {
+  padding: 16px;
+  background: #f1f7fa;
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  .Box{
+    display: flex;
+    flex-direction: column;
+
+    .Chip{
+      margin-bottom: 8px;
+    }
+
+    .logout{
+
+    }
+  }
+}

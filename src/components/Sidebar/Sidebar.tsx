@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/material';
-import UserItem from '../UserItem/UserItem';
 import Menu from '../Menu/Menu';
+import UsersItems from '../UserItem/UsersItems';
+import CurrentUser from '../CurrentUser/CurrentUser';
 
 const Sidebar: FC = () => (
   <Box>
-    <UserItem />
+    <CurrentUser />
+    <UsersItems />
     <Menu />
   </Box>
 );
