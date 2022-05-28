@@ -1,0 +1,28 @@
+.title{
+  margin-bottom: 10px;
+}
+
+.chatSection{
+  width: 100%;
+  height: 75vh;
+  padding: 0px;
+
+  .Grid{
+    border-right: 1px solid #e0e0e0;
+  }
+
+  .messageArea {
+    height: 65vh;
+    overflow-y: auto;
+  }
+
+  .message{
+    padding: 10px;
+  }
+
+  .send{
+    align-items: end;
+    padding-left: 15px;
+  }
+
+}

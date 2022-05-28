@@ -26,7 +26,7 @@ const Posts = () => {
 
   return (
     <div>
-      {posts && posts.map((post) => (
+      {posts.map((post) => (
         <Box key={post.createdAt} className={styles.Box}>
           <Link
             key={post.author._id}

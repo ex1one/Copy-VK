@@ -99,6 +99,7 @@ const Auth = () => {
               })}
               name="name"
               onChange={changeHandler}
+              value={userData.name}
               className={styles.TextField}
               label="Имя пользователя"
               type="text"
@@ -114,6 +115,7 @@ const Auth = () => {
               })}
               name="email"
               onChange={changeHandler}
+              value={userData.email}
               className={styles.TextField}
               label="E-mail"
               type="text"
@@ -128,6 +130,7 @@ const Auth = () => {
                 },
               })}
               name="password"
+              value={userData.password}
               onChange={changeHandler}
               type="password"
               label="Пароль"
