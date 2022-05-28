@@ -1,17 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
-  Alert,
-  Avatar, Box, Button, CircularProgress, Grid, Paper, TextField,
+  Alert, Avatar, Box, Button, CircularProgress, Grid, Paper, TextField,
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getAuth } from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import styles from './auth.module.scss';
-import { IAuthorization, IUserData } from './types';
+import { useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import styles from '../../pages/Auth/auth.module.scss';
+import { IAuthorization, IUserData } from '../../pages/Auth/types';
 
-const Auth = () => {
+const Registration = () => {
   const {
     register,
     formState: {
@@ -24,21 +23,24 @@ const Auth = () => {
   const [userData, setUserData] = useState<IUserData>({
     email: '',
     password: '',
+    name: '',
   } as IUserData);
 
   const ga = getAuth();
   const navigate = useNavigate();
 
   const [
-    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
     user,
     loading,
     error,
-  ] = useSignInWithEmailAndPassword(ga);
+  ] = useCreateUserWithEmailAndPassword(ga);
+  const [updateProfile] = useUpdateProfile(ga);
 
   const handleLogin: SubmitHandler<IAuthorization> = () => {
-    signInWithEmailAndPassword(userData.email, userData.password).then();
-    reset();
+    Promise.all;
+    createUserWithEmailAndPassword(userData.email, userData.password)
+      .then(() => updateProfile({ displayName: userData.name }));
   };
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -51,10 +53,14 @@ const Auth = () => {
       case 'password':
         setUserData({ ...userData, password: event.target.value });
         break;
+      case 'name':
+        setUserData({ ...userData, name: event.target.value });
+        break;
       default:
         return target;
     }
   };
+  console.log(error);
 
   useEffect(() => {
     if (user) navigate('/');
@@ -67,9 +73,25 @@ const Auth = () => {
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
             <Avatar className={styles.Avatar}><LockOutlined /></Avatar>
-            <h2>Авторизация</h2>
+            <h2>Регистрация</h2>
           </Grid>
           <Box className={styles.Box}>
+            <TextField
+              {...register('name', {
+                required: 'Это обязательное поле',
+                pattern: {
+                  value: /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
+                  message: 'Введите валидное имя пользователя',
+                },
+              })}
+              name="name"
+              onChange={changeHandler}
+              value={userData.name}
+              className={styles.TextField}
+              label="Имя пользователя"
+              type="text"
+              helperText={errors.name && errors.name.message}
+            />
             <TextField
               {...register('email', {
                 required: 'Это обязательное поле',
@@ -106,13 +128,12 @@ const Auth = () => {
           <Box className={styles.insideBox}>
             <Button
               className={styles.Button}
-              color="primary"
+              color="success"
               variant="contained"
               type="submit"
             >
-              Войти
+              Регистрация
             </Button>
-            <Link className={styles.link} to="/reg">Регистрация</Link>
             {loading && <CircularProgress color="success" />}
           </Box>
         </Paper>
@@ -121,4 +142,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default Registration;

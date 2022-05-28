@@ -1,18 +1,20 @@
 import React from 'react';
 import { Avatar, Box } from '@mui/material';
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from './profile.module.scss';
-import useAuth from '../../hooks/useAuth';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const ga = getAuth();
+  const [user, loading, error] = useAuthState(ga);
   return (
     <Box className={styles.Box}>
       <Avatar
         alt="#"
         className={styles.Avatar}
-        src={user?.avatar}
+        src={user?.photoURL}
       />
-      <h1>{user?.name}</h1>
+      <h1>{user?.displayName}</h1>
     </Box>
   );
 };

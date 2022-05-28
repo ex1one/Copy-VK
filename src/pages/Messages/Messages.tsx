@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+import {
+  addDoc, collection, getFirestore, onSnapshot,
+} from 'firebase/firestore';
 import {
   Alert, Avatar,
   Divider,
@@ -12,28 +14,27 @@ import {
   Typography,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import useAuth from '../../hooks/useAuth';
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import formatDate from '../../utilities/formatedDate';
 import styles from './messages.module.scss';
 import { IMessage } from './types';
 
 const Messages = () => {
-  const { db, user } = useAuth();
+  const ga = getAuth();
+  const db = getFirestore();
+
+  const [user, loading, error] = useAuthState(ga);
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const [error, setError] = useState<Error | null>(null);
   const [message, setMessage] = useState('');
 
   const addMessage = () => {
-    try {
-      addDoc(collection(db, 'messages'), {
-        user,
-        createdAt: formatDate(new Date()),
-        message,
-      }).then();
-      setMessage('');
-    } catch (e) {
-      if (e instanceof Error) setError(e);
-    }
+    addDoc(collection(db, 'messages'), {
+      user,
+      createdAt: formatDate(new Date()),
+      message,
+    }).then();
+    setMessage('');
   };
 
   const changeHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -72,7 +73,7 @@ const Messages = () => {
                 <ListItem key={msg.createdAt}>
                   <Grid container>
                     <Grid item xs={12}>
-                      <ListItemText sx={msg.user._id === user?._id ? { color: '#19762d' } : {}} />
+                      <ListItemText sx={msg.user._id === user?.uid ? { color: '#19762d' } : {}} />
                     </Grid>
                     <Grid item xs={12}>
                       <ListItemText sx={{ alignItem: 'right' }} />
@@ -81,8 +82,8 @@ const Messages = () => {
                 </ListItem>
 
                 <ListItem key={msg.createdAt}>
-                  <Grid container sx={msg.user._id === user?._id ? { textAlign: 'right' } : {}}>
-                    <Grid display="flex" justifyContent={msg.user._id === user?._id ? 'flex-end' : 'flex-start'} item xs={12}>
+                  <Grid container sx={msg.user._id === user?.uid ? { textAlign: 'right' } : {}}>
+                    <Grid display="flex" justifyContent={msg.user._id === user?.uid ? 'flex-end' : 'flex-start'} item xs={12}>
                       <Avatar src={msg.user.avatar} />
                     </Grid>
                     <Grid item xs={12}>

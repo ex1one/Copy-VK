@@ -3,14 +3,13 @@ import {
   Avatar, Box, ImageList, ImageListItem,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, getFirestore, onSnapshot } from 'firebase/firestore';
 import styles from './posts.module.scss';
 import { IPosts } from '../../api/posts/types';
-import useAuth from '../../hooks/useAuth';
 
 const Posts = () => {
   const [posts, setPosts] = useState<IPosts[]>([]);
-  const { db } = useAuth();
+  const db = getFirestore();
 
   useEffect(() => {
     const unSub = onSnapshot(collection(db, 'posts'), (doc) => {

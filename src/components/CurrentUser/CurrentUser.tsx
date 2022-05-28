@@ -2,12 +2,13 @@ import React from 'react';
 import {
   Button, Card, Box, Chip, Avatar,
 } from '@mui/material';
-import { signOut } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from './currentUser.module.scss';
-import useAuth from '../../hooks/useAuth';
 
 const CurrentUser = () => {
-  const { user, ga } = useAuth();
+  const ga = getAuth();
+  const [user, loading, error] = useAuthState(ga);
 
   const logOut = () => {
     signOut(ga).then();
@@ -18,8 +19,8 @@ const CurrentUser = () => {
       <Box className={styles.Box}>
         <Chip
           className={styles.Chip}
-          avatar={<Avatar alt="" src={user?.avatar} />}
-          label={user?.name || 'Без имени'}
+          avatar={<Avatar alt="" />}
+          label={user?.displayName || 'Без имени'}
           variant="outlined"
         />
         <Button className={styles.logout} onClick={logOut} variant="outlined">Выйти</Button>

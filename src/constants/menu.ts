@@ -21,7 +21,7 @@ const menu: IMenu[] = [
   },
   {
     title: 'Новости',
-    link: '/news',
+    link: '/',
     icon: Icons.Article,
   },
 ];
