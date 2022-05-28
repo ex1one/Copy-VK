@@ -25,7 +25,7 @@ const AuthProvider: FC = ({ children }) => {
       if (userAuth) {
         setUser({
           _id: userAuth.uid,
-          avatar: users[1].avatar,
+          avatar: users[0].avatar,
           name: userAuth.displayName || '',
         });
       } else {
