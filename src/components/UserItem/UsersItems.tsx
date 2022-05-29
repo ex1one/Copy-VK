@@ -29,7 +29,7 @@ const UsersItems: FC = () => {
             />
             {user.isInNetwork && <Box className={styles.insideBox} />}
           </Box>
-          <span className={styles.name}>{user.name}</span>
+          <span className={styles.name}>{user.displayName}</span>
         </Link>
       ))}
       <List>

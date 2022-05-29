@@ -7,10 +7,11 @@ import styles from './addNewPost.module.scss';
 import formatDate from '../../utilities/formatedDate';
 
 const AddNewPost = () => {
-  const [content, setContent] = useState('');
   const ga = getAuth();
-  const [user, loading, error] = useAuthState(ga);
+  const [user] = useAuthState(ga);
   const db = getFirestore();
+  const [content, setContent] = useState('');
+  const [error, setError] = useState<Error | null>(null);
 
   const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setContent(event.target.value);
@@ -19,10 +20,14 @@ const AddNewPost = () => {
   const addNewPost = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
       addDoc(collection(db, 'posts'), {
-        author: user,
+        author: user?.displayName,
+        avatar: user?.photoURL,
         createdAt: formatDate(new Date()),
         content,
-      }).then();
+      })
+        .catch((e) => {
+          setError(e);
+        });
       setContent('');
     }
   };

@@ -21,8 +21,13 @@
   }
 
   .send{
-    align-items: end;
     padding-left: 15px;
+    display: flex;
+
+
+    .add{
+      margin-left: 20px;
+    }
   }
 
 }

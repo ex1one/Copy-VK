@@ -1,36 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Avatar, Box, ImageList, ImageListItem,
+  Alert,
+  Avatar, Box, CircularProgress, ImageList, ImageListItem,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { collection, getFirestore, onSnapshot } from 'firebase/firestore';
+import { collection, getFirestore } from 'firebase/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import styles from './posts.module.scss';
 import { IPosts } from '../../api/posts/types';
 
 const Posts = () => {
   const [posts, setPosts] = useState<IPosts[]>([]);
   const db = getFirestore();
+  const [snapshot, loading, error] = useCollection(collection(db, 'posts'));
 
   useEffect(() => {
-    const unSub = onSnapshot(collection(db, 'posts'), (doc) => {
-      doc.forEach((d) => {
-        const post = d.data() as IPosts;
-        setPosts((prevState) => [post, ...prevState]);
-      });
+    const array:IPosts[] = [];
+
+    snapshot?.docs.forEach((d) => {
+      const post = d.data() as IPosts;
+      array.push(post);
     });
-    return () => {
-      unSub();
-    };
-  }, []);
+    setPosts(array);
+  }, [snapshot]);
 
   return (
     <div>
-      {posts.map((post) => (
+      {loading && <CircularProgress color="success" />}
+      {error && <Alert severity="error">{error}</Alert>}
+
+      {posts && posts.map((post) => (
         <Box key={post.createdAt} className={styles.Box}>
           <Link
-            key={post.author._id}
+            key={post.author.uid}
             className={styles.Link}
-            to={`/profile/${post.author._id}`}
+            to={`/profile/${post.author.uid}`}
           >
             <Box className={styles.insideBox}>
               <Avatar
@@ -40,7 +44,7 @@ const Posts = () => {
               />
             </Box>
             <Box>
-              <div className={styles.name}>{post.author.name}</div>
+              <div className={styles.name}>{post.author.displayName}</div>
               <div className={styles.createdAt}>{post?.createdAt}</div>
             </Box>
           </Link>
