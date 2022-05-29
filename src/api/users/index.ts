@@ -5,7 +5,7 @@ const fetchUsers: IUser[] = [
   {
     _id: 'dada',
     avatar: logo,
-    name: 'Ilya Rogachev',
+    displayName: 'Ilya Rogachev',
     isInNetwork: false,
   },
 ];

@@ -38,9 +38,9 @@ const Registration = () => {
   const [updateProfile] = useUpdateProfile(ga);
 
   const handleLogin: SubmitHandler<IAuthorization> = () => {
-    Promise.all;
     createUserWithEmailAndPassword(userData.email, userData.password)
       .then(() => updateProfile({ displayName: userData.name }));
+    reset();
   };
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -60,7 +60,6 @@ const Registration = () => {
         return target;
     }
   };
-  console.log(error);
 
   useEffect(() => {
     if (user) navigate('/');

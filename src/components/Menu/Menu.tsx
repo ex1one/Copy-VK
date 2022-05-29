@@ -3,11 +3,23 @@ import {
   Card, List, ListItem, ListItemButton, ListItemIcon, ListItemText,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import menu from '../../constants/menu';
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import menu, { IMenu } from '../../constants/menu';
 import styles from './menu.module.scss';
 
 const Menu = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
+  const ga = getAuth();
+  const [user, loading, error] = useAuthState(ga);
+
+  const clickHandler = (item: IMenu) => {
+    if (item.link !== '/') {
+      navigate(`${item.link}/${user?.uid}`);
+    } else {
+      navigate(item.link);
+    }
+  };
 
   return (
     <Card
@@ -17,7 +29,7 @@ const Menu = () => {
       <List>
         {menu.map((item) => (
           <ListItem key={item.link} disablePadding>
-            <ListItemButton onClick={() => history(item.link)}>
+            <ListItemButton onClick={() => clickHandler(item)}>
               <ListItemIcon className={styles.ListItemIcon}>
                 <item.icon />
               </ListItemIcon>

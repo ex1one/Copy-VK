@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import routes, { ERoutesNames } from '../../constants/routes';
 import Layout from '../Layout/Layout';
-import Auth from '../../pages/Auth/Auth';
 import Registration from '../Registration/Registration';
 
 const RootRoutes: FC = () => {
@@ -28,8 +27,7 @@ const RootRoutes: FC = () => {
             )}
         />
       ))}
-      {/* <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} /> */}
-      {/* <Route path="*" element={<Navigate to={ERoutesNames.AUTH} />} /> */}
+      <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
     </Routes>
   );
 };

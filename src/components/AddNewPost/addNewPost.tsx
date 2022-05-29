@@ -5,7 +5,6 @@ import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from './addNewPost.module.scss';
 import formatDate from '../../utilities/formatedDate';
-import useAuth from '../../hooks/useAuth';
 
 const AddNewPost = () => {
   const [content, setContent] = useState('');

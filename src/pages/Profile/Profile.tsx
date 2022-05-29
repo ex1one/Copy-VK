@@ -12,7 +12,7 @@ const Profile = () => {
       <Avatar
         alt="#"
         className={styles.Avatar}
-        src={user?.photoURL}
+        // src={user?.photoURL}
       />
       <h1>{user?.displayName}</h1>
     </Box>
