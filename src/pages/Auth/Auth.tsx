@@ -6,7 +6,7 @@ import {
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getAuth } from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
@@ -83,7 +83,7 @@ const Auth = () => {
 
   return (
     <form onSubmit={handleSubmit(handleLogin)}>
-      {(errorCreate || errorSign) && <Alert severity="error">{errorSign || errorCreate}</Alert>}
+      {/* {(errorCreate || errorSign) && <Alert severity="error">{errorSign || errorCreate}</Alert>} */}
       <Grid>
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
@@ -160,7 +160,7 @@ const Auth = () => {
               Регистрация
             </Button>
             {/* <Link className={styles.link} to="/reg">Регистрация</Link> */}
-            {(loadingCreate || loadingSign) && <CircularProgress color="success" />}
+            {/* {(loadingCreate || loadingSign) && <CircularProgress color="success" />} */}
           </Box>
         </Paper>
       </Grid>
