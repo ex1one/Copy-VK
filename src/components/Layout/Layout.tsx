@@ -3,8 +3,8 @@ import { Grid } from '@mui/material';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import './layout.module.scss';
-import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
 
 const Layout: FC = ({ children }) => {
   const ga = getAuth();

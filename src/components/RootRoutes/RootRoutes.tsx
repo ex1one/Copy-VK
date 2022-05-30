@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import {
+  Routes, Route, Navigate,
+} from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import routes, { ERoutesNames } from '../../constants/routes';
@@ -24,7 +26,7 @@ const RootRoutes: FC = () => {
                 <route.element />
               )}
             </Layout>
-            )}
+        )}
         />
       ))}
       <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />

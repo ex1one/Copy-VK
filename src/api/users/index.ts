@@ -3,7 +3,7 @@ import logo from '../../../public/img/1.jpg';
 
 const fetchUsers: IUser[] = [
   {
-    _id: 'dada',
+    uid: 'ex1one',
     avatar: logo,
     displayName: 'Ilya Rogachev',
     isInNetwork: false,

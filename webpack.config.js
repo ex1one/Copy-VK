@@ -12,12 +12,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js',
+    publicPath: '/',
   },
   devServer: {
     port: 3000,
-    historyApiFallback: {
-      disableDotRule: true,
-    },
+    historyApiFallback: true
   },
   plugins: [
     new HTMLWebpackPlugin({template: "./src/index.html"}),
