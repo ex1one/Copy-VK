@@ -13,24 +13,25 @@ const RootRoutes: FC = () => {
   const [user, loading, error] = useAuthState(ga);
 
   return (
-    <Routes>
-      {routes.map((route) => (
-        <Route
-          path={route.path}
-          key={route.path}
-          element={(
-            <Layout>
-              {route.path && !user ? (
-                <Registration />
-              ) : (
-                <route.element />
-              )}
-            </Layout>
-        )}
-        />
-      ))}
-      <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        {routes.map((route) => (
+          <Route
+            path={route.path}
+            key={route.path}
+            element={
+                route.path && !user ? (
+                  <Registration />
+                ) : (
+                  <route.element />
+                )
+}
+          />
+        ))}
+        <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
+      </Routes>
+    </Layout>
+
   );
 };
 
