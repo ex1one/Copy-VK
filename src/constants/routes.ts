@@ -4,7 +4,6 @@ import Messages from '../pages/Messages/Messages';
 import Conversation from '../pages/Conversation/Conversation';
 import Friends from '../pages/Friends/Friends';
 import Auth from '../pages/Auth/Auth';
-import Registration from '../components/Registration/Registration';
 
 export interface IRoute {
   path: string;
@@ -18,7 +17,6 @@ export enum ERoutesNames {
   CONVERSATION = '/messages/:id',
   FRIENDS = '/friends/:id',
   AUTH = '/auth',
-  REG = '/reg',
 }
 
 const routes: IRoute[] = [
@@ -45,10 +43,6 @@ const routes: IRoute[] = [
   {
     path: ERoutesNames.AUTH,
     element: Auth,
-  },
-  {
-    path: ERoutesNames.REG,
-    element: Registration,
   },
 ];
 

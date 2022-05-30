@@ -5,12 +5,16 @@ import {
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
+import { getStorage, ref } from 'firebase/storage';
 import styles from './currentUser.module.scss';
 
 const CurrentUser = () => {
   const ga = getAuth();
+  const storage = getStorage();
   const [user, loading, error] = useAuthState(ga);
   const navigate = useNavigate();
+  const [avatar] = useDownloadURL(ref(storage, `${user?.uid}.png`));
 
   const logOut = () => {
     signOut(ga).then();
@@ -26,7 +30,7 @@ const CurrentUser = () => {
         <Chip
           className={styles.Chip}
           onClick={clickHandler}
-          avatar={<Avatar alt="" />}
+          avatar={<Avatar alt="" src={avatar} />}
           label={user?.displayName}
           variant="outlined"
         />

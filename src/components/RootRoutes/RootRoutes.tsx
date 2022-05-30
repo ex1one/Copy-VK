@@ -6,32 +6,31 @@ import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import routes, { ERoutesNames } from '../../constants/routes';
 import Layout from '../Layout/Layout';
-import Registration from '../Registration/Registration';
+import Auth from '../../pages/Auth/Auth';
 
 const RootRoutes: FC = () => {
   const ga = getAuth();
   const [user, loading, error] = useAuthState(ga);
 
   return (
-    <Layout>
-      <Routes>
-        {routes.map((route) => (
-          <Route
-            path={route.path}
-            key={route.path}
-            element={
-                route.path && !user ? (
-                  <Registration />
-                ) : (
-                  <route.element />
-                )
-}
-          />
-        ))}
-        <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
-      </Routes>
-    </Layout>
-
+    <Routes>
+      {routes.map((route) => (
+        <Route
+          path={route.path}
+          key={route.path}
+          element={(
+            <Layout>
+              {route.path && !user ? (
+                <Auth />
+              ) : (
+                <route.element />
+              )}
+            </Layout>
+              )}
+        />
+      ))}
+      <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
+    </Routes>
   );
 };
 

@@ -7,7 +7,11 @@ import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getAuth } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithEmailAndPassword,
+  useUpdateProfile,
+} from 'react-firebase-hooks/auth';
 import styles from './auth.module.scss';
 import { IAuthorization, IUserData } from './types';
 
@@ -24,6 +28,7 @@ const Auth = () => {
   const [userData, setUserData] = useState<IUserData>({
     email: '',
     password: '',
+    name: '',
   } as IUserData);
 
   const ga = getAuth();
@@ -32,12 +37,25 @@ const Auth = () => {
   const [
     signInWithEmailAndPassword,
     user,
-    loading,
-    error,
+    loadingSign,
+    errorSign,
   ] = useSignInWithEmailAndPassword(ga);
+  const [isRegForm, setIsRegForm] = useState(false);
+
+  const [
+    createUserWithEmailAndPassword,
+    loadingCreate,
+    errorCreate,
+  ] = useCreateUserWithEmailAndPassword(ga);
+  const [updateProfile] = useUpdateProfile(ga);
 
   const handleLogin: SubmitHandler<IAuthorization> = () => {
-    signInWithEmailAndPassword(userData.email, userData.password).then();
+    if (isRegForm) {
+      createUserWithEmailAndPassword(userData.email, userData.password)
+        .then(() => updateProfile({ displayName: userData.name }));
+    } else {
+      signInWithEmailAndPassword(userData.email, userData.password);
+    }
     reset();
   };
 
@@ -51,6 +69,9 @@ const Auth = () => {
       case 'password':
         setUserData({ ...userData, password: event.target.value });
         break;
+      case 'name':
+        setUserData({ ...userData, name: event.target.value });
+        break;
       default:
         return target;
     }
@@ -62,7 +83,7 @@ const Auth = () => {
 
   return (
     <form onSubmit={handleSubmit(handleLogin)}>
-      {error && <Alert severity="error">{error}</Alert>}
+      {(errorCreate || errorSign) && <Alert severity="error">{errorSign || errorCreate}</Alert>}
       <Grid>
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
@@ -70,6 +91,22 @@ const Auth = () => {
             <h2>Авторизация</h2>
           </Grid>
           <Box className={styles.Box}>
+            <TextField
+              {...register('name', {
+                required: 'Это обязательное поле',
+                pattern: {
+                  value: /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
+                  message: 'Введите валидное имя пользователя',
+                },
+              })}
+              name="name"
+              onChange={changeHandler}
+              value={userData.name}
+              className={styles.TextField}
+              label="Имя пользователя"
+              type="text"
+              helperText={errors.name && errors.name.message}
+            />
             <TextField
               {...register('email', {
                 required: 'Это обязательное поле',
@@ -105,6 +142,7 @@ const Auth = () => {
           </Box>
           <Box className={styles.insideBox}>
             <Button
+              onClick={() => setIsRegForm(false)}
               className={styles.Button}
               color="primary"
               variant="contained"
@@ -112,8 +150,17 @@ const Auth = () => {
             >
               Войти
             </Button>
-            <Link className={styles.link} to="/reg">Регистрация</Link>
-            {loading && <CircularProgress color="success" />}
+            <Button
+              onClick={() => setIsRegForm(true)}
+              className={styles.Button}
+              color="success"
+              variant="contained"
+              type="submit"
+            >
+              Регистрация
+            </Button>
+            {/* <Link className={styles.link} to="/reg">Регистрация</Link> */}
+            {(loadingCreate || loadingSign) && <CircularProgress color="success" />}
           </Box>
         </Paper>
       </Grid>
