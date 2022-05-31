@@ -73,7 +73,7 @@ const Messages = () => {
                 <ListItem key={1}>
                   <Grid container>
                     <Grid item xs={12}>
-                      <ListItemText sx={msg.uid === user?.uid ? { color: '#19762d' } : {}} />
+                      <ListItemText sx={msg.uid === user?.uid ? { textAlign: 'right' } : {}} />
                     </Grid>
                     <Grid item xs={12}>
                       <ListItemText sx={{ alignItem: 'right' }} />
@@ -90,7 +90,12 @@ const Messages = () => {
                       <ListItemText sx={{ alignItem: 'right' }} secondary={msg.author} />
                     </Grid>
                     <Grid item xs={12}>
-                      <ListItemText sx={{ alignItem: 'right' }} primary={msg.message} />
+                      <ListItemText
+                        sx={msg.uid === user?.uid ? {
+                          color: '#1976d2',
+                        } : {}}
+                        primary={msg.message}
+                      />
                     </Grid>
                     <Grid item xs={12}>
                       <ListItemText sx={{ alignItem: 'right' }} secondary={msg.createdAt} />
