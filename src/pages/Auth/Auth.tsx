@@ -159,8 +159,7 @@ const Auth = () => {
             >
               Регистрация
             </Button>
-            {/* <Link className={styles.link} to="/reg">Регистрация</Link> */}
-            {/* {(loadingCreate || loadingSign) && <CircularProgress color="success" />} */}
+            {loadingCreate && <CircularProgress color="success" />}
           </Box>
         </Paper>
       </Grid>
