@@ -17,9 +17,9 @@ const UsersItems: FC = () => {
     >
       {users.map((user) => (
         <Link
-          key={user._id}
+          key={user.uid}
           className={styles.Link}
-          to={`/profile/${user._id}`}
+          to={`/profile/${user.uid}`}
         >
           <Box className={styles.Box}>
             <Avatar
@@ -29,7 +29,7 @@ const UsersItems: FC = () => {
             />
             {user.isInNetwork && <Box className={styles.insideBox} />}
           </Box>
-          <span className={styles.name}>{user.name}</span>
+          <span className={styles.name}>{user.displayName}</span>
         </Link>
       ))}
       <List>

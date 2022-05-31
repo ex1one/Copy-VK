@@ -1,7 +1,7 @@
-import { IUser } from '../../api/users/types';
-
 export interface IMessage {
-  user: IUser;
+  author: string;
+  avatar: string;
   message: string;
   createdAt: string;
+  uid: string;
 }

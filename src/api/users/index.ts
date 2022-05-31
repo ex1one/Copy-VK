@@ -3,15 +3,21 @@ import logo from '../../../public/img/1.jpg';
 
 const fetchUsers: IUser[] = [
   {
-    _id: 'dada',
+    uid: 'ex1one',
     avatar: logo,
-    name: 'Ilya Rogachev',
+    displayName: 'Ilya Rogachev',
     isInNetwork: false,
   },
   {
-    _id: '3131',
+    uid: 'Ksenia',
     avatar: logo,
-    name: 'Ilya Gorbachev',
+    displayName: 'Ksenia',
+    isInNetwork: false,
+  },
+  {
+    uid: 'Natasha',
+    avatar: logo,
+    displayName: 'Natasha',
     isInNetwork: true,
   },
 ];

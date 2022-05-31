@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Home, Search } from '@mui/icons-material';
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from './header.module.scss';
-import useAuth from '../../hooks/useAuth';
 
 const Header = () => {
   const [isFocus, isSetFocus] = useState<boolean>(false);
-  const { user } = useAuth();
+  const ga = getAuth();
+  const [user, loading, error] = useAuthState(ga);
 
   const changeHandler = () => {
     isSetFocus(true);

@@ -3,10 +3,12 @@ import { Grid } from '@mui/material';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import './layout.module.scss';
-import useAuth from '../../hooks/useAuth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
 
 const Layout: FC = ({ children }) => {
-  const { user } = useAuth();
+  const ga = getAuth();
+  const [user, loading, error] = useAuthState(ga);
 
   return (
     <>

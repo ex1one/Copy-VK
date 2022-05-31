@@ -1,12 +1,17 @@
 import React, { FC } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import routes from '../../constants/routes';
+import {
+  Routes, Route, Navigate,
+} from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import routes, { ERoutesNames } from '../../constants/routes';
 import Layout from '../Layout/Layout';
-import useAuth from '../../hooks/useAuth';
 import Auth from '../../pages/Auth/Auth';
 
 const RootRoutes: FC = () => {
-  const { user } = useAuth();
+  const ga = getAuth();
+  const [user, loading, error] = useAuthState(ga);
+
   return (
     <Routes>
       {routes.map((route) => (
@@ -21,9 +26,10 @@ const RootRoutes: FC = () => {
                 <route.element />
               )}
             </Layout>
-            )}
+              )}
         />
       ))}
+      <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
     </Routes>
   );
 };

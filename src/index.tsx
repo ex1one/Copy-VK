@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { StyledEngineProvider } from '@mui/material';
 import firebase from 'firebase/compat/app';
 import RootRoutes from './components/RootRoutes/RootRoutes';
-import AuthProvider from './providers/AuthProvider';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyBqOSCXyUvfnaGaQwBOXInT_THKo0BKYtE',
@@ -22,9 +21,7 @@ render(
   <React.StrictMode>
     <BrowserRouter>
       <StyledEngineProvider injectFirst>
-        <AuthProvider>
-          <RootRoutes />
-        </AuthProvider>
+        <RootRoutes />
       </StyledEngineProvider>
     </BrowserRouter>
   </React.StrictMode>,

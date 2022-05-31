@@ -2,7 +2,7 @@ import * as Icons from '@mui/icons-material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { SvgIconTypeMap } from '@mui/material';
 
-interface IMenu {
+export interface IMenu {
   title: string;
   link: string;
   icon: OverridableComponent<SvgIconTypeMap>
@@ -21,7 +21,7 @@ const menu: IMenu[] = [
   },
   {
     title: 'Новости',
-    link: '/news',
+    link: '/',
     icon: Icons.Article,
   },
 ];

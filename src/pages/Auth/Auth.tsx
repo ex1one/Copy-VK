@@ -5,11 +5,15 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithEmailAndPassword,
+  useUpdateProfile,
+} from 'react-firebase-hooks/auth';
 import styles from './auth.module.scss';
 import { IAuthorization, IUserData } from './types';
-import useAuth from '../../hooks/useAuth';
 
 const Auth = () => {
   const {
@@ -27,32 +31,30 @@ const Auth = () => {
     name: '',
   } as IUserData);
 
-  const [error, setError] = useState(null);
-  const [isRegForm, setIsRegForm] = useState(false);
-  const [isLoading, isSetLoading] = useState(false);
-  const { ga, user } = useAuth();
+  const ga = getAuth();
   const navigate = useNavigate();
 
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loadingSign,
+    errorSign,
+  ] = useSignInWithEmailAndPassword(ga);
+  const [isRegForm, setIsRegForm] = useState(false);
+
+  const [
+    createUserWithEmailAndPassword,
+    loadingCreate,
+    errorCreate,
+  ] = useCreateUserWithEmailAndPassword(ga);
+  const [updateProfile] = useUpdateProfile(ga);
+
   const handleLogin: SubmitHandler<IAuthorization> = () => {
-    isSetLoading(true);
     if (isRegForm) {
-      createUserWithEmailAndPassword(ga, userData.email, userData.password)
-        .then((userCredential) => {
-          updateProfile(userCredential.user, {
-            displayName: userData.name,
-          }).then();
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
-      isSetLoading(false);
+      createUserWithEmailAndPassword(userData.email, userData.password)
+        .then(() => updateProfile({ displayName: userData.name }));
     } else {
-      signInWithEmailAndPassword(ga, userData.email, userData.password)
-        .then()
-        .catch((error) => {
-          setError(error.message);
-        });
-      isSetLoading(false);
+      signInWithEmailAndPassword(userData.email, userData.password);
     }
     reset();
   };
@@ -81,7 +83,7 @@ const Auth = () => {
 
   return (
     <form onSubmit={handleSubmit(handleLogin)}>
-      {error && <Alert severity="error">{error}</Alert>}
+      {/* {(errorCreate || errorSign) && <Alert severity="error">{errorSign || errorCreate}</Alert>} */}
       <Grid>
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
@@ -151,13 +153,14 @@ const Auth = () => {
             <Button
               onClick={() => setIsRegForm(true)}
               className={styles.Button}
-              color="primary"
+              color="success"
               variant="contained"
               type="submit"
             >
               Регистрация
             </Button>
-            {isLoading && <CircularProgress color="success" />}
+            {/* <Link className={styles.link} to="/reg">Регистрация</Link> */}
+            {/* {(loadingCreate || loadingSign) && <CircularProgress color="success" />} */}
           </Box>
         </Paper>
       </Grid>

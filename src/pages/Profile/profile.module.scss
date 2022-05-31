@@ -3,6 +3,44 @@
   border-radius: 10px;
   padding: 8px;
   margin-top: 15px;
+  align-items: center;
+  position: relative;
 
+  .Avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .content{
+
+    .paragraph{
+      font-size: 23px;
+    }
+
+    .upload{
+      font-size: 23px;
+      cursor: pointer;
+      display: flex;
+
+      input{
+        display: none;
+      }
+
+      &:hover{
+        color: yellow;
+      }
+
+      .AddAPhotoIcon{
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .edit{
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 97%;
+  }
 
 }
