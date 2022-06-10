@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import {
-  Avatar, Box, Button, CircularProgress, Grid, Paper, TextField,
+  Avatar, Box, Button, Grid, Paper, TextField,
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { getAuth } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch } from 'react-redux';
 import styles from './auth.module.scss';
 import { IAuth } from './types';
 import AuthValidation from '../../schemes/AuthValidation';
+import { auth } from '../../store/auth/auth';
 
 const Auth = () => {
   const {
@@ -35,28 +36,23 @@ const Auth = () => {
 
   const ga = getAuth();
   const navigate = useNavigate();
-
-  const [
-    createUserWithEmailAndPassword,
-    loading,
-    error,
-  ] = useCreateUserWithEmailAndPassword(ga);
-  const [updateProfile] = useUpdateProfile(ga);
+  const dispatch = useDispatch();
 
   const handleLogin: SubmitHandler<IAuth> = () => {
-    createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(() => updateProfile({ displayName: userData.name })
-        .catch((e) => {
-
-        }));
+    createUserWithEmailAndPassword(ga, userData.email, userData.password)
+      .then(({ user }) => dispatch(auth({
+        id: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        refreshToken: user.refreshToken,
+        accessToken: user.getIdToken().then((token) => token),
+      })));
     navigate('/');
     reset();
   };
-  console.log(error);
 
   return (
     <form onSubmit={handleSubmit(handleLogin)}>
-      {/* {error && <Alert severity="error">{error}</Alert>} */}
       <Grid>
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
@@ -120,7 +116,6 @@ const Auth = () => {
               Регистрация
             </Button>
             <Link className={styles.link} to="/login">Войти</Link>
-            {loading && <CircularProgress color="success" />}
           </Box>
         </Paper>
       </Grid>
