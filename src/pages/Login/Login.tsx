@@ -9,8 +9,8 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../Auth/auth.module.scss';
-import AuthValidation from '../../schemes/AuthValidation';
 import { ILogin } from './types';
+import LoginValidation from '../../schemes/LoginValidation';
 
 const Login = () => {
   const {
@@ -22,7 +22,7 @@ const Login = () => {
     handleSubmit,
   } = useForm<ILogin>(
     {
-      resolver: yupResolver(AuthValidation),
+      resolver: yupResolver(LoginValidation),
       mode: 'onBlur',
     },
   );

@@ -38,19 +38,25 @@ const Auth = () => {
 
   const [
     createUserWithEmailAndPassword,
-    loadingCreate,
+    loading,
+    error,
   ] = useCreateUserWithEmailAndPassword(ga);
   const [updateProfile] = useUpdateProfile(ga);
 
   const handleLogin: SubmitHandler<IAuth> = () => {
     createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(() => updateProfile({ displayName: userData.name }));
+      .then(() => updateProfile({ displayName: userData.name })
+        .catch((e) => {
+
+        }));
     navigate('/');
     reset();
   };
+  console.log(error);
 
   return (
     <form onSubmit={handleSubmit(handleLogin)}>
+      {/* {error && <Alert severity="error">{error}</Alert>} */}
       <Grid>
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
@@ -114,7 +120,7 @@ const Auth = () => {
               Регистрация
             </Button>
             <Link className={styles.link} to="/login">Войти</Link>
-            {loadingCreate && <CircularProgress color="success" />}
+            {loading && <CircularProgress color="success" />}
           </Box>
         </Paper>
       </Grid>
