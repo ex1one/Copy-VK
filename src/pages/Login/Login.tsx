@@ -4,15 +4,15 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
-import { yupResolver } from '@hookform/resolvers/yup';
-import styles from './auth.module.scss';
-import { IAuth } from './types';
+import styles from '../Auth/auth.module.scss';
 import AuthValidation from '../../schemes/AuthValidation';
+import { ILogin } from './types';
 
-const Auth = () => {
+const Login = () => {
   const {
     register,
     formState: {
@@ -20,15 +20,14 @@ const Auth = () => {
     },
     reset,
     handleSubmit,
-  } = useForm<IAuth>(
+  } = useForm<ILogin>(
     {
       resolver: yupResolver(AuthValidation),
       mode: 'onBlur',
     },
   );
 
-  const [userData, setUserData] = useState<IAuth>({
-    name: '',
+  const [userData, setUserData] = useState<ILogin>({
     email: '',
     password: '',
   });
@@ -37,14 +36,12 @@ const Auth = () => {
   const navigate = useNavigate();
 
   const [
-    createUserWithEmailAndPassword,
-    loadingCreate,
-  ] = useCreateUserWithEmailAndPassword(ga);
-  const [updateProfile] = useUpdateProfile(ga);
+    signInWithEmailAndPassword,
+    loading,
+  ] = useSignInWithEmailAndPassword(ga);
 
-  const handleLogin: SubmitHandler<IAuth> = () => {
-    createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(() => updateProfile({ displayName: userData.name }));
+  const handleLogin: SubmitHandler<ILogin> = () => {
+    signInWithEmailAndPassword(userData.email, userData.password);
     navigate('/');
     reset();
   };
@@ -55,24 +52,9 @@ const Auth = () => {
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
             <Avatar className={styles.Avatar}><LockOutlined /></Avatar>
-            <h2>Регистрация</h2>
+            <h2>Войти</h2>
           </Grid>
           <Box className={styles.Box}>
-            <TextField
-              {...register('name', {
-                onChange: (event) => {
-                  setUserData({
-                    ...userData,
-                    name: event.target.value,
-                  });
-                },
-              })}
-              error={!!errors.name?.message}
-              className={styles.TextField}
-              label="Имя пользователя"
-              type="text"
-              helperText={errors.name && errors.name.message}
-            />
             <TextField
               {...register('email', {
                 onChange: (event) => {
@@ -107,14 +89,14 @@ const Auth = () => {
           <Box className={styles.insideBox}>
             <Button
               className={styles.Button}
-              color="success"
+              color="primary"
               variant="contained"
               type="submit"
             >
-              Регистрация
+              Войти
             </Button>
-            <Link className={styles.link} to="/login">Войти</Link>
-            {loadingCreate && <CircularProgress color="success" />}
+            <Link className={styles.link} to="/auth">Регистрация</Link>
+            {loading && <CircularProgress color="success" />}
           </Box>
         </Paper>
       </Grid>
@@ -122,4 +104,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default Login;
