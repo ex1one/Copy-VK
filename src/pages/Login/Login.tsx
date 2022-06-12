@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import {
-  Avatar, Box, Button, CircularProgress, Grid, Paper, TextField,
+  Avatar, Box, Button, Grid, Paper, TextField,
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 import styles from '../Auth/auth.module.scss';
 import { ILogin } from './types';
 import LoginValidation from '../../schemes/LoginValidation';
+import { auth } from '../../store/auth/auth';
 
 const Login = () => {
   const {
@@ -34,14 +36,23 @@ const Login = () => {
 
   const ga = getAuth();
   const navigate = useNavigate();
-
-  const [
-    signInWithEmailAndPassword,
-    loading,
-  ] = useSignInWithEmailAndPassword(ga);
+  const dispatch = useDispatch();
 
   const handleLogin: SubmitHandler<ILogin> = () => {
-    signInWithEmailAndPassword(userData.email, userData.password);
+    signInWithEmailAndPassword(ga, userData.email, userData.password)
+      .then(({ user }) => {
+        dispatch(auth({
+          id: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          refreshToken: user.refreshToken,
+          accessToken: user.accessToken,
+        }));
+        Cookies.set('refreshToken', user.refreshToken);
+      })
+      .catch((e) => {
+        alert(e?.message);
+      });
     navigate('/');
     reset();
   };
@@ -96,7 +107,6 @@ const Login = () => {
               Войти
             </Button>
             <Link className={styles.link} to="/auth">Регистрация</Link>
-            {loading && <CircularProgress color="success" />}
           </Box>
         </Paper>
       </Grid>

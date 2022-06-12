@@ -8,6 +8,7 @@ import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 import styles from './auth.module.scss';
 import { IAuth } from './types';
 import AuthValidation from '../../schemes/AuthValidation';
@@ -48,7 +49,7 @@ const Auth = () => {
           refreshToken: user.refreshToken,
           accessToken: user.accessToken, // По другому нужно получать токен, но это мне не нрав
         }));
-        // Cookies.set('refreshToken', user.refreshToken);
+        Cookies.set('refreshToken', user.refreshToken);
       })
       .catch((e) => {
         alert(e?.message);
