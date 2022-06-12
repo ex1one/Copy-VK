@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Avatar, Box, Button, Grid, Paper, TextField,
+  Avatar, Box, Button, CircularProgress, Grid, Paper, TextField,
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -33,12 +33,14 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const ga = getAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin: SubmitHandler<ILogin> = () => {
+    setIsLoading(true);
     signInWithEmailAndPassword(ga, userData.email, userData.password)
       .then(({ user }) => {
         dispatch(auth({
@@ -52,7 +54,8 @@ const Login = () => {
       })
       .catch((e) => {
         alert(e?.message);
-      });
+      })
+      .finally(() => setIsLoading(false));
     navigate('/');
     reset();
   };
@@ -106,6 +109,7 @@ const Login = () => {
             >
               Войти
             </Button>
+            {isLoading && <CircularProgress />}
             <Link className={styles.link} to="/auth">Регистрация</Link>
           </Box>
         </Paper>
