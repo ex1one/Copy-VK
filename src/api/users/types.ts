@@ -3,5 +3,5 @@ export interface IUser {
   displayName: string | null;
   email: string | null;
   refreshToken: string | null;
-  accessToken: Promise<string> | null;
+  accessToken: string | null;
 }

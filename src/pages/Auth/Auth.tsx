@@ -40,13 +40,19 @@ const Auth = () => {
 
   const handleLogin: SubmitHandler<IAuth> = () => {
     createUserWithEmailAndPassword(ga, userData.email, userData.password)
-      .then(({ user }) => dispatch(auth({
-        id: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        refreshToken: user.refreshToken,
-        accessToken: user.getIdToken().then((token) => token),
-      })));
+      .then(({ user }) => {
+        dispatch(auth({
+          id: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          refreshToken: user.refreshToken,
+          accessToken: user.accessToken, // По другому нужно получать токен, но это мне не нрав
+        }));
+        // Cookies.set('refreshToken', user.refreshToken);
+      })
+      .catch((e) => {
+        alert(e?.message);
+      });
     navigate('/');
     reset();
   };
