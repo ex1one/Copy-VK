@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from 'firebase/auth';
 
-const initialState: User | null = null;
+const initialState: User = {} as User;
 
 export const user = createSlice({
   name: 'User',

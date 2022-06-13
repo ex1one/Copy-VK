@@ -4,7 +4,6 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { getAuth } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
@@ -37,16 +36,15 @@ const Auth = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const ga = getAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin: SubmitHandler<IAuth> = () => {
     setIsLoading(true);
-    auth(userData.email, userData.password).then(({ data }) => {
-      Cookies.set('token', data.idToken);
+    auth(userData.email, userData.password).then(async ({ data }) => {
+      Cookies.set('token', await data.getIdToken());
       dispatch(setUser(data));
-    }).catch();
+    }).catch((error) => alert(error));
     navigate('/');
     reset();
   };

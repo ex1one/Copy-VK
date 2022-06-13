@@ -43,6 +43,7 @@
         "no-debugger": ["warn"],
         "no-unused-vars": ["warn"],
         "linebreak-style": 0,
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "no-param-reassign": "off"
     }
 }

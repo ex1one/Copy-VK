@@ -1,9 +1,8 @@
 import { AxiosResponse } from 'axios';
-import firebase from 'firebase/compat';
+import { User } from 'firebase/auth';
 import instance from '../instance';
-import U
 
-const auth = (email: string, password: string): Promise<AxiosResponse<User>> => instance.post<User>(`${process.env.APP_AUTH}`, {
+const auth = (email: string, password: string): Promise<AxiosResponse<User>> => instance.post<User>('accounts:signUp', {
   email,
   password,
 });

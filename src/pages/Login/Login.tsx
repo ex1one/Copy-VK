@@ -12,7 +12,6 @@ import Cookies from 'js-cookie';
 import styles from '../Auth/auth.module.scss';
 import { ILogin } from './types';
 import LoginValidation from '../../schemes/LoginValidation';
-import { auth } from '../../store/auth/auth';
 
 const Login = () => {
   const {
@@ -45,7 +44,7 @@ const Login = () => {
       .then(({ user }) => {
         dispatch(auth({
           id: user.uid,
-          email: user.email,  я
+          email: user.email,
           displayName: user.displayName,
           refreshToken: user.refreshToken,
           accessToken: user.accessToken,
