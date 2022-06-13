@@ -5,7 +5,8 @@ const initialState: IUser = {
   id: null,
   displayName: null,
   email: null,
-  accessToken: null,
+  registered: false,
+  idToken: null,
   refreshToken: null,
 };
 
@@ -18,7 +19,8 @@ export const Authorization = createSlice({
       state.displayName = action.payload.displayName;
       state.email = action.payload.email;
       state.refreshToken = action.payload.refreshToken;
-      state.accessToken = action.payload.accessToken;
+      state.registered = action.payload.registered;
+      state.idToken = action.payload.idToken;
     },
   },
 });
