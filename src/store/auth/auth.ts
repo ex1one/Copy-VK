@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../api/users/types';
+import { IAuthState } from './types';
 
-const initialState: IUser = {
-  id: null,
-  displayName: null,
-  email: null,
-  registered: false,
-  idToken: null,
+const initialState: IAuthState = {
+  user: null,
+  accessToken: null,
   refreshToken: null,
 };
 
@@ -14,13 +11,10 @@ export const Authorization = createSlice({
   name: 'Authorization',
   initialState,
   reducers: {
-    auth: (state, action: PayloadAction<IUser>) => {
-      state.id = action.payload.id;
-      state.displayName = action.payload.displayName;
-      state.email = action.payload.email;
+    auth: (state, action: PayloadAction<IAuthState>) => {
+      state.user = action.payload.user;
       state.refreshToken = action.payload.refreshToken;
-      state.registered = action.payload.registered;
-      state.idToken = action.payload.idToken;
+      state.accessToken = action.payload.accessToken;
     },
   },
 });

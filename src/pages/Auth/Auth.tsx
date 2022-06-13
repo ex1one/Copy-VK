@@ -49,7 +49,7 @@ const Auth = () => {
           email: user.email,
           displayName: user.displayName,
           refreshToken: user.refreshToken,
-          accessToken: user.accessToken, // По другому нужно получать токен, но это мне не нрав
+          accessToken: user., // По другому нужно получать токен, но это мне не нрав
         }));
         Cookies.set('refreshToken', user.refreshToken);
       })
