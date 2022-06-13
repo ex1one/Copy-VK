@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,8 @@ import Cookies from 'js-cookie';
 import styles from './auth.module.scss';
 import { IAuth } from './types';
 import AuthValidation from '../../schemes/AuthValidation';
-import { auth } from '../../store/auth/auth';
+import auth from '../../api/auth';
+import { setUser } from '../../store/auth/auth';
 
 const Auth = () => {
   const {
@@ -42,21 +43,10 @@ const Auth = () => {
 
   const handleLogin: SubmitHandler<IAuth> = () => {
     setIsLoading(true);
-    createUserWithEmailAndPassword(ga, userData.email, userData.password)
-      .then(({ user }) => {
-        dispatch(auth({
-          id: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          refreshToken: user.refreshToken,
-          accessToken: user., // По другому нужно получать токен, но это мне не нрав
-        }));
-        Cookies.set('refreshToken', user.refreshToken);
-      })
-      .catch((e) => {
-        alert(e?.message);
-      })
-      .finally(() => setIsLoading(false));
+    auth(userData.email, userData.password).then(({ data }) => {
+      Cookies.set('token', data.idToken);
+      dispatch(setUser(data));
+    }).catch();
     navigate('/');
     reset();
   };

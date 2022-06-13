@@ -45,7 +45,7 @@ const Login = () => {
       .then(({ user }) => {
         dispatch(auth({
           id: user.uid,
-          email: user.email,
+          email: user.email,  я
           displayName: user.displayName,
           refreshToken: user.refreshToken,
           accessToken: user.accessToken,
