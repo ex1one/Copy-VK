@@ -7,8 +7,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 import styles from './auth.module.scss';
 import { IAuth } from './types';
 import AuthValidation from '../../schemes/AuthValidation';
@@ -36,17 +36,19 @@ const Auth = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  const ga = getAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin: SubmitHandler<IAuth> = () => {
     setIsLoading(true);
-    axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBqOSCXyUvfnaGaQwBOXInT_THKo0BKYtE', userData)
-      .then(({ data }) => {
-        Cookies.set('token', data.accessToken);
-        dispatch(setUser(data));
+    createUserWithEmailAndPassword(ga, userData.email, userData.password)
+      .then(async ({ user }) => {
+        Cookies.set('token', await user.getIdToken());
+        dispatch(setUser(user));
       })
-      .catch((error) => alert(error));
+      .catch((error) => alert(error))
+      .finally(() => setIsLoading(false));
     navigate('/');
     reset();
   };
