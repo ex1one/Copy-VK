@@ -3,7 +3,9 @@ import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { StyledEngineProvider } from '@mui/material';
 import firebase from 'firebase/compat/app';
+import { Provider } from 'react-redux';
 import RootRoutes from './components/RootRoutes/RootRoutes';
+import { store } from './store/store';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyBqOSCXyUvfnaGaQwBOXInT_THKo0BKYtE',
@@ -19,11 +21,13 @@ if (document.body) document.body.append(div);
 
 render(
   <React.StrictMode>
-    <BrowserRouter>
-      <StyledEngineProvider injectFirst>
-        <RootRoutes />
-      </StyledEngineProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <StyledEngineProvider injectFirst>
+          <RootRoutes />
+        </StyledEngineProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   div,
 );

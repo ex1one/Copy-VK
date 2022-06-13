@@ -1,36 +1,32 @@
 import React, { FC } from 'react';
-import {
-  Routes, Route, Navigate,
-} from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import routes, { ERoutesNames } from '../../constants/routes';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from '../Layout/Layout';
-import Auth from '../../pages/Auth/Auth';
+import { ERoutesNames, privateRoutes, publicRoutes } from '../../constants/routes';
 
 const RootRoutes: FC = () => {
   const ga = getAuth();
-  const [user, loading, error] = useAuthState(ga);
+  const [user] = useAuthState(ga);
 
   return (
-    <Routes>
-      {routes.map((route) => (
-        <Route
-          path={route.path}
-          key={route.path}
-          element={(
-            <Layout>
-              {route.path && !user ? (
-                <Auth />
-              ) : (
-                <route.element />
-              )}
-            </Layout>
-              )}
-        />
-      ))}
-      <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
-    </Routes>
+    <Layout>
+      {user ? (
+        <Routes>
+          {privateRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={<route.element />} />
+          ))}
+          <Route path="*" element={<Navigate to={ERoutesNames.HOME} />} />
+        </Routes>
+      ) : (
+        <Routes>
+          {publicRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={<route.element />} />
+          ))}
+          <Route path="*" element={<Navigate to={ERoutesNames.AUTH} />} />
+        </Routes>
+      ) }
+    </Layout>
   );
 };
 

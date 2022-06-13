@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const { EnvironmentPlugin } = require("webpack")
 
 module.exports = {
   mode: "development",
@@ -21,6 +22,10 @@ module.exports = {
   plugins: [
     new HTMLWebpackPlugin({template: "./src/index.html"}),
     new CleanWebpackPlugin(),
+    new EnvironmentPlugin({
+      APP_URL: "https://identitytoolkit.googleapis.com/v1/",
+      APP_KEY: "AIzaSyBqOSCXyUvfnaGaQwBOXInT_THKo0BKYtE",
+    })
   ],
   module: {
     rules: [

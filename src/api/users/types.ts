@@ -1,10 +1,8 @@
-import { Dispatch, SetStateAction } from 'react';
-
-export type TypeSetState<T> = Dispatch<SetStateAction<T>>;
-
 export interface IUser {
-  uid: string;
-  avatar: string;
-  displayName: string;
-  isInNetwork?: boolean;
+  id: string | null;
+  displayName: string | null;
+  email: string | null;
+  registered: boolean;
+  refreshToken: string | null;
+  idToken: string | null;
 }

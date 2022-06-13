@@ -1,10 +1,4 @@
-export interface IAuthorization {
-  email: string;
-  password: string;
-  name: string;
-}
-
-export interface IUserData {
+export interface IAuth {
   email: string;
   password: string;
   name: string;

@@ -1,0 +1,51 @@
+.Paper{
+  padding: 25px;
+  height: 100%;
+  width: 450px;
+  margin: 20px auto;
+  box-shadow: 0 0 5px 0 #000;
+
+  .Grid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .Avatar{
+      background: #1bbd7e;
+    }
+  }
+
+  .Box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .TextField{
+      margin-bottom: 15px;
+    }
+
+    .p{
+      color: red;
+      font-size: 14px;
+    }
+
+  }
+
+  .insideBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+
+    .Button{
+      margin-right: 10px;
+      height: 40px;
+    }
+
+    .link{
+      text-decoration: none;
+      color: blue;
+      font-size: 16px;
+    }
+  }
+}

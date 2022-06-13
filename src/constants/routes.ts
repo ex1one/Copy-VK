@@ -4,6 +4,7 @@ import Messages from '../pages/Messages/Messages';
 import Conversation from '../pages/Conversation/Conversation';
 import Friends from '../pages/Friends/Friends';
 import Auth from '../pages/Auth/Auth';
+import Login from '../pages/Login/Login';
 
 export interface IRoute {
   path: string;
@@ -13,13 +14,25 @@ export interface IRoute {
 export enum ERoutesNames {
   HOME = '/',
   PROFILE = '/profile/:id',
-  MESSAGES = '/messages',
+  MESSAGES = '/messages', // УБРАТЬ
   CONVERSATION = '/messages/:id',
   FRIENDS = '/friends/:id',
   AUTH = '/auth',
+  LOGIN = '/login',
 }
 
-const routes: IRoute[] = [
+export const publicRoutes:IRoute[] = [
+  {
+    path: ERoutesNames.AUTH,
+    element: Auth,
+  },
+  {
+    path: ERoutesNames.LOGIN,
+    element: Login,
+  },
+];
+
+export const privateRoutes:IRoute[] = [
   {
     path: ERoutesNames.HOME,
     element: Home,
@@ -40,10 +53,4 @@ const routes: IRoute[] = [
     path: ERoutesNames.FRIENDS,
     element: Friends,
   },
-  {
-    path: ERoutesNames.AUTH,
-    element: Auth,
-  },
 ];
-
-export default routes;

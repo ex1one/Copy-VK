@@ -4,17 +4,16 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
-import axios from 'axios';
-import styles from './auth.module.scss';
-import { IAuth } from './types';
-import AuthValidation from '../../schemes/AuthValidation';
-import { setUser } from '../../store/auth/auth';
+import styles from '../Auth/auth.module.scss';
+import { ILogin } from './types';
+import LoginValidation from '../../schemes/LoginValidation';
 
-const Auth = () => {
+const Login = () => {
   const {
     register,
     formState: {
@@ -22,31 +21,40 @@ const Auth = () => {
     },
     reset,
     handleSubmit,
-  } = useForm<IAuth>(
+  } = useForm<ILogin>(
     {
-      resolver: yupResolver(AuthValidation),
+      resolver: yupResolver(LoginValidation),
       mode: 'onBlur',
     },
   );
 
-  const [userData, setUserData] = useState<IAuth>({
-    name: '',
+  const [userData, setUserData] = useState<ILogin>({
     email: '',
     password: '',
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  const ga = getAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogin: SubmitHandler<IAuth> = () => {
+  const handleLogin: SubmitHandler<ILogin> = () => {
     setIsLoading(true);
-    axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBqOSCXyUvfnaGaQwBOXInT_THKo0BKYtE', userData)
-      .then(({ data }) => {
-        Cookies.set('token', data.accessToken);
-        dispatch(setUser(data));
+    signInWithEmailAndPassword(ga, userData.email, userData.password)
+      .then(({ user }) => {
+        dispatch(auth({
+          id: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          refreshToken: user.refreshToken,
+          accessToken: user.accessToken,
+        }));
+        Cookies.set('refreshToken', user.refreshToken);
       })
-      .catch((error) => alert(error));
+      .catch((e) => {
+        alert(e?.message);
+      })
+      .finally(() => setIsLoading(false));
     navigate('/');
     reset();
   };
@@ -57,24 +65,9 @@ const Auth = () => {
         <Paper className={styles.Paper}>
           <Grid className={styles.Grid}>
             <Avatar className={styles.Avatar}><LockOutlined /></Avatar>
-            <h2>Регистрация</h2>
+            <h2>Войти</h2>
           </Grid>
           <Box className={styles.Box}>
-            <TextField
-              {...register('name', {
-                onChange: (event) => {
-                  setUserData({
-                    ...userData,
-                    name: event.target.value,
-                  });
-                },
-              })}
-              error={!!errors.name?.message}
-              className={styles.TextField}
-              label="Имя пользователя"
-              type="text"
-              helperText={errors.name && errors.name.message}
-            />
             <TextField
               {...register('email', {
                 onChange: (event) => {
@@ -109,14 +102,14 @@ const Auth = () => {
           <Box className={styles.insideBox}>
             <Button
               className={styles.Button}
-              color="success"
+              color="primary"
               variant="contained"
               type="submit"
             >
-              Регистрация
+              Войти
             </Button>
             {isLoading && <CircularProgress />}
-            <Link className={styles.link} to="/login">Войти</Link>
+            <Link className={styles.link} to="/auth">Регистрация</Link>
           </Box>
         </Paper>
       </Grid>
@@ -124,4 +117,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default Login;
