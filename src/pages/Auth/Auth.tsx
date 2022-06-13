@@ -8,10 +8,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 import styles from './auth.module.scss';
 import { IAuth } from './types';
 import AuthValidation from '../../schemes/AuthValidation';
-import auth from '../../api/auth';
 import { setUser } from '../../store/auth/auth';
 
 const Auth = () => {
@@ -41,10 +41,12 @@ const Auth = () => {
 
   const handleLogin: SubmitHandler<IAuth> = () => {
     setIsLoading(true);
-    auth(userData.email, userData.password).then(async ({ data }) => {
-      Cookies.set('token', await data.getIdToken());
-      dispatch(setUser(data));
-    }).catch((error) => alert(error));
+    axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBqOSCXyUvfnaGaQwBOXInT_THKo0BKYtE', userData)
+      .then(({ data }) => {
+        Cookies.set('token', data.accessToken);
+        dispatch(setUser(data));
+      })
+      .catch((error) => alert(error));
     navigate('/');
     reset();
   };
