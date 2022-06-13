@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import styles from '../Auth/auth.module.scss';
 import { ILogin } from './types';
 import LoginValidation from '../../schemes/LoginValidation';
+import { setUser } from '../../store/auth/user';
 
 const Login = () => {
   const {
@@ -42,17 +43,11 @@ const Login = () => {
     setIsLoading(true);
     signInWithEmailAndPassword(ga, userData.email, userData.password)
       .then(({ user }) => {
-        dispatch(auth({
-          id: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          refreshToken: user.refreshToken,
-          accessToken: user.accessToken,
-        }));
-        Cookies.set('refreshToken', user.refreshToken);
+        dispatch(setUser(user));
+        user.getIdToken().then((response) => Cookies.set('token', response));
       })
       .catch((e) => {
-        alert(e?.message);
+        alert(e.message);
       })
       .finally(() => setIsLoading(false));
     navigate('/');

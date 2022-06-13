@@ -12,7 +12,7 @@ import Cookies from 'js-cookie';
 import styles from './auth.module.scss';
 import { IAuth } from './types';
 import AuthValidation from '../../schemes/AuthValidation';
-import { setUser } from '../../store/auth/auth';
+import { setUser } from '../../store/auth/user';
 
 const Auth = () => {
   const {
@@ -43,9 +43,9 @@ const Auth = () => {
   const handleLogin: SubmitHandler<IAuth> = () => {
     setIsLoading(true);
     createUserWithEmailAndPassword(ga, userData.email, userData.password)
-      .then(async ({ user }) => {
-        Cookies.set('token', await user.getIdToken());
+      .then(({ user }) => {
         dispatch(setUser(user));
+        user.getIdToken().then((response) => Cookies.set('token', response));
       })
       .catch((error) => alert(error))
       .finally(() => setIsLoading(false));
