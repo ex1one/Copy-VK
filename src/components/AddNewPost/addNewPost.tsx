@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { Alert, Box, TextField } from '@mui/material';
-import { collection, addDoc, getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import styles from './addNewPost.module.scss';
 import formatDate from '../../utilities/formatedDate';
+import useTypedSelector from '../../hooks/useTypedSelector';
 
 const AddNewPost = () => {
-  const ga = getAuth();
-  const [user] = useAuthState(ga);
   const db = getFirestore();
   const [content, setContent] = useState('');
   const [error, setError] = useState<Error | null>(null);
+  const user = useTypedSelector((state) => state.user);
 
   const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setContent(event.target.value);

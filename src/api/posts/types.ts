@@ -1,7 +1,7 @@
-import { IUser } from '../users/types';
+import { User } from 'firebase/auth';
 
 export interface IPosts {
-  author: IUser;
+  author: User;
   createdAt: string;
   content: string;
   images?: string[];

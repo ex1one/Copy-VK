@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Home, Search } from '@mui/icons-material';
-import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from './header.module.scss';
+import useTypedSelector from '../../hooks/useTypedSelector';
 
 const Header = () => {
   const [isFocus, isSetFocus] = useState<boolean>(false);
-  const ga = getAuth();
-  const [user, loading, error] = useAuthState(ga);
+  const user = useTypedSelector((state) => state.user);
 
   const changeHandler = () => {
     isSetFocus(true);

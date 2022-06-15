@@ -3,15 +3,13 @@ import {
   Card, List, ListItem, ListItemButton, ListItemIcon, ListItemText,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import menu, { IMenu } from '../../constants/menu';
 import styles from './menu.module.scss';
+import useTypedSelector from '../../hooks/useTypedSelector';
 
 const Menu = () => {
   const navigate = useNavigate();
-  const ga = getAuth();
-  const [user, loading, error] = useAuthState(ga);
+  const user = useTypedSelector((state) => state.user);
 
   const clickHandler = (item: IMenu) => {
     if (item.link !== '/') {

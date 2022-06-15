@@ -3,12 +3,10 @@ import { Grid } from '@mui/material';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import './layout.module.scss';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { getAuth } from 'firebase/auth';
+import useTypedSelector from '../../hooks/useTypedSelector';
 
 const Layout: FC = ({ children }) => {
-  const ga = getAuth();
-  const [user, loading, error] = useAuthState(ga);
+  const user = useTypedSelector((state) => state.user);
 
   return (
     <>

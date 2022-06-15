@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Alert,
-  Avatar, Box, CircularProgress, ImageList, ImageListItem,
+  Alert, Avatar, Box, CircularProgress, ImageList, ImageListItem,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { collection, getFirestore } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import styles from './posts.module.scss';
 import { IPosts } from '../../api/posts/types';
+import logoTemporary from '../../../public/img/1.jpg';
 
 const Posts = () => {
   const [posts, setPosts] = useState<IPosts[]>([]);
@@ -40,7 +40,7 @@ const Posts = () => {
               <Avatar
                 alt="#"
                 className={styles.Avatar}
-                src={post.author.avatar}
+                src={logoTemporary}
               />
             </Box>
             <Box>

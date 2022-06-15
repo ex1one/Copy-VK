@@ -1,20 +1,17 @@
 import React from 'react';
 import {
-  Button, Card, Box, Chip, Avatar,
+  Avatar, Box, Button, Card, Chip,
 } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
-import { useDownloadURL } from 'react-firebase-hooks/storage';
-import { getStorage, ref } from 'firebase/storage';
 import styles from './currentUser.module.scss';
+import useTypedSelector from '../../hooks/useTypedSelector';
+import logoTemporary from '../../../public/img/1.jpg';
 
 const CurrentUser = () => {
   const ga = getAuth();
-  const storage = getStorage();
-  const [user, loading, error] = useAuthState(ga);
+  const user = useTypedSelector((state) => state.user);
   const navigate = useNavigate();
-  const [avatar] = useDownloadURL(ref(storage, `${user?.uid}.png`));
 
   const logOut = () => {
     signOut(ga).then();
@@ -30,7 +27,7 @@ const CurrentUser = () => {
         <Chip
           className={styles.Chip}
           onClick={clickHandler}
-          avatar={<Avatar alt="" src={avatar} />}
+          avatar={<Avatar alt="" src={logoTemporary} />}
           label={user?.displayName}
           variant="outlined"
         />

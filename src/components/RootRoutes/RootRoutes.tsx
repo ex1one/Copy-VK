@@ -1,13 +1,11 @@
-import React, { FC } from 'react';
-import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from '../Layout/Layout';
 import { ERoutesNames, privateRoutes, publicRoutes } from '../../constants/routes';
+import useTypedSelector from '../../hooks/useTypedSelector';
 
-const RootRoutes: FC = () => {
-  const ga = getAuth();
-  const [user] = useAuthState(ga);
+const RootRoutes = () => {
+  const user = useTypedSelector((state) => state.user);
 
   return (
     <Layout>

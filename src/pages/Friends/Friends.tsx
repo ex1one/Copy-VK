@@ -7,8 +7,8 @@ import fetchUsers from '../../api/users';
 const Friends = () => (
   <Box className={styles.Box}>
     <h1>Friends</h1>
-    {fetchUsers.map((user) => (
-      <Box key={user.uid}>
+    {fetchUsers.map((user) => ( // Тут будет получение всех юзеров
+      <Box key={user.id}>
         <Box className={styles.user}>
           <Avatar alt="" src={user.avatar} />
           <p>{user.displayName}</p>
