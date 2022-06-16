@@ -17,9 +17,9 @@ const UsersItems: FC = () => {
     >
       {users.map((user) => (
         <Link
-          key={user.uid}
+          key={user.id}
           className={styles.Link}
-          to={`/profile/${user.uid}`}
+          to={`/profile/${user.id}`}
         >
           <Box className={styles.Box}>
             <Avatar

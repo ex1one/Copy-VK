@@ -44,7 +44,14 @@ const Auth = () => {
     setIsLoading(true);
     createUserWithEmailAndPassword(ga, userData.email, userData.password)
       .then(({ user }) => {
-        dispatch(setUser(user));
+        dispatch(setUser({
+          displayName: user.displayName,
+          id: user.uid,
+          email: user.email,
+          photoURL: user.photoURL,
+          accessToken: user.accessToken,
+          refreshToken: user.refreshToken,
+        }));
         user.getIdToken().then((response) => Cookies.set('token', response));
       })
       .catch((error) => alert(error))

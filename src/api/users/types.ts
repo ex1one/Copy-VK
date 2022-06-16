@@ -1,8 +1,6 @@
 export interface IUser {
-  id: string | null;
+  uid: string | null;
   displayName: string | null;
   email: string | null;
-  registered: boolean;
-  refreshToken: string | null;
-  idToken: string | null;
+  photoUrl: string | null;
 }

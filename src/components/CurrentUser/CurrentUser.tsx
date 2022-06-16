@@ -14,7 +14,7 @@ const CurrentUser = () => {
   const navigate = useNavigate();
 
   const logOut = () => {
-    signOut(ga).then();
+    signOut(ga);
   };
 
   const clickHandler = () => {
